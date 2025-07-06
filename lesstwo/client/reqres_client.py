@@ -34,3 +34,13 @@ class ReqresClient:
             "password" : password
         }
         return requests.post(f"{self.BASE_URL}register", json=payload, headers=headers)
+
+    def login(self, email: str, password: str):
+        headers = {
+            "x-api-key": "reqres-free-v1"
+        }
+        payload = {
+            "email" : email,
+            "password" : password
+        }
+        return requests.post(f"{self.BASE_URL}login", json=payload, headers=headers)

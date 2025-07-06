@@ -1,4 +1,3 @@
-import requests
 import allure
 from lesstwo.utils.logger import logger
 
