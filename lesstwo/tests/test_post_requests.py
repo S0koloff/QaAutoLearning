@@ -1,54 +1,42 @@
 import allure
 import requests
-import logging
 
-from lesstwo.tests.get_requests import BASE_URL
+from lesstwo.utils.logger import logger
 
 @allure.feature("Reqres API: POST")
 @allure.story("Создание юзера")
-def test_create_user():
+def test_create_user(client):
     with allure.step("Формируем данные для нового юзера"):
-        payload = {
-            "name": "morpheus",
-            "job": "leader"
-        }
+        name = "morpheus"
+        job = "leader"
 
     with allure.step("Отправялем запрос на создание юзера"):
-        headers = {
-            "x-api-key": "reqres-free-v1"
-        }
-        response = requests.post(f"{BASE_URL}users", json=payload, headers=headers)
-        logging.info(f"Create user: Status of response {response.status_code}")
+        response = client.create_user(name, job)
+        logger.info(f"Create user: Status of response {response.status_code}")
         assert response.status_code == 201
 
     with allure.step("Проверка ответа"):
         data = response.json()
         assert data["name"] == "morpheus"
         assert "id" in data
-        logging.info(f"Crate user: Response\n {data}")
+        logger.info(f"Crate user: Response\n {data}")
 
 @allure.feature("Reqres API: POST")
 @allure.story("Регистрация")
-def test_registration():
+def test_registration(client):
     with allure.step("Формируем payload"):
-        payload = {
-            "email":"eve.holt@reqres.in",
-            "password":"pistol"
-        }
-        headers = {
-            "x-api-key": "reqres-free-v1"
-        }
+        email = "eve.holt@reqres.in"
+        password = "pistol"
 
     with allure.step("Отправка запроса"):
-        response = requests.post(f"{BASE_URL}register", json=payload, headers=headers)
-
-        logging.info(f"Status code: {response.status_code}")
-        logging.info(f"Response body: {response.text}")
+        response = client.register_user(email, password)
+        logger.info(f"Status code: {response.status_code}")
+        logger.info(f"Response body: {response.text}")
 
         if response.status_code != 200:
             allure.attach(response.text, name="Response body", attachment_type=allure.attachment_type.JSON)
 
-        assert response.status_code == 200
+        assert response.status_code == 201
 
     with allure.step("Проверка ответа"):
         data = response.json()

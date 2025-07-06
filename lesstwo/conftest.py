@@ -3,16 +3,8 @@ import pytest
 import shutil
 import os
 
-from client.reqres_client import ReqresClient
-
-
-def pytest_configure(config):
-    logging.basicConfig(
-        filename='../test_log.log',
-        level=logging.INFO,
-        format ='%(asctime)s [%(levelname)s] %(message)s',
-        filemode='w'
-    )
+from lesstwo.client.reqres_client import ReqresClient
+from lesstwo.utils.logger import logger
 
 def pytest_sessionstart(session):
     """Вызывается перед запуском тестов."""

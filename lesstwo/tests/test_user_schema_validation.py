@@ -1,21 +1,21 @@
 import allure
 import requests
-import logging
+
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 
+from lesstwo.utils.logger import logger
 from lesstwo.schemas.user_schema import user_schema
 from lesstwo.schemas.user_list_schema import user_list_schema
-from lesstwo.tests.get_requests import BASE_URL
 
 @allure.feature("User validation")
 @allure.story("User chema validation")
-def test_user_schema_validation():
+def test_user_schema_validation(client):
     with allure.step("Create request"):
-        response = requests.get(f"{BASE_URL}users/2")
+        response = client.get_user(id=2)
 
-        logging.info(f"Status code: {response.status_code}")
-        logging.info(f"Response body: {response.text}")
+        logger.info(f"Status code: {response.status_code}")
+        logger.info(f"Response body: {response.text}")
 
         if response.status_code != 200:
             allure.attach(response.text, "Invalid statuse code")
@@ -33,12 +33,12 @@ def test_user_schema_validation():
 
 @allure.feature("Users list validation")
 @allure.story("")
-def test_user_list_schema():
+def test_user_list_schema(client):
     with allure.step("Create request"):
-        response = requests.get(f"{BASE_URL}users?page=2")
+        response = client.get_users(page=2)
 
-        logging.info(f"Status code: {response.status_code}")
-        logging.info(f"Response body: {response.text}")
+        logger.info(f"Status code: {response.status_code}")
+        logger.info(f"Response body: {response.text}")
 
         if response.status_code != 200:
             allure.attach(response.text, "Invalid statuse code")
