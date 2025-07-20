@@ -3,7 +3,7 @@ import pytest
 import shutil
 import os
 
-from client.reqres_client import ReqresClient
+from lesstwo.client.reqres_client import ReqresClient
 
 
 def pytest_configure(config):
