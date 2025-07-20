@@ -5,7 +5,6 @@ import os
 
 from lesstwo.client.reqres_client import ReqresClient
 
-
 def pytest_configure(config):
     logging.basicConfig(
         filename='../test_log.log',

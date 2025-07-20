@@ -1,0 +1,5 @@
+--alluredir=allure-results
+
+allure generate allure-results -o ./allure-report/latest --clean
+
+allure open ./allure-report/latest
