@@ -4,7 +4,14 @@ import shutil
 import os
 
 from lesstwo.client.reqres_client import ReqresClient
-from lesstwo.utils.logger import logger
+
+def pytest_configure(config):
+    logging.basicConfig(
+        filename='../test_log.log',
+        level=logging.INFO,
+        format ='%(asctime)s [%(levelname)s] %(message)s',
+        filemode='w'
+    )
 
 def pytest_sessionstart(session):
     """Вызывается перед запуском тестов."""
