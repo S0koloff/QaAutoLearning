@@ -44,3 +44,9 @@ class ReqresClient:
             "password" : password
         }
         return requests.post(f"{self.BASE_URL}login", json=payload, headers=headers)
+    
+    def delete_user(self, id: int):
+         headers = {
+            "x-api-key": "reqres-free-v1"
+        }
+         return requests.delete(f"{self.BASE_URL}users/{id}", headers=headers)
